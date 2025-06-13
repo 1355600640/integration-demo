@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 确保在 head 或 main js 入口中引入 CSS -->
+<link rel="stylesheet" href="https://checkout.antom.com/sdk/antom.css">
+
+<!-- <script src="https://sdk.marmot-cloud.com/package/ams-checkout/1.34.0/dist/umd/ams-checkout.min.js"></script> -->
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .click-but {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    button {
+      width: 200px;
+      height: 40px;
+      display: block;
+      margin: 20px auto;
+      border: 0;
+      outline: none;
+      border-radius: 0;
+      padding: 10px 0;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: #1ab188;
+      color: #ffffff;
+      transition: all 0.5s ease;
+    }
+  }
+
+  .content {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: none;
+   
+  }
+  .content .checkout-container{
+      width: 100%;
+      height: 100%;
+    }
+</style>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="click-but">
+    <button type="button">adyen</button>
+    <div class="content">
+      <div class="checkout-container" id="ckp-embed-wrapper"></div>
+    </div>
+  </div>
+  <script>
+    const script = document.createElement('script')
+    script.src =
+      'https://sdk.marmot-cloud.com/package/ams-checkout/1.34.0/dist/umd/ams-checkout.min.js'
+    script.onload = function () {
+      window.onload = () => {
+        const checkoutApp = new AMSCheckoutPage({
+          environment: 'sandbox',
+          onEventCallback: ({ code, message }) => {
+            if (code === 'SDK_PAYMENT_SUCCESSFUL') {
+              alert('支付成功')
+            }
+          },
+        })
+        const sessionData = {
+          "normalUrl": "https://checkout.antom.com/checkout-page/pages/payment/index.html?sessionData=zlwfTQlUTNCYf6G9aFU%2FFiXpVL7IFj7KaX7cWp6YeTVH8iA2HariKNwQg8QDqEa7YjNI8UzIXDtsNMlGVp%2Bv7A%3D%3D%26%26SG%26%26188%26%26eyJlbGlnaWJsZUVhc3lQYXlNYXJrZXRpbmciOmZhbHNlLCJleHRlbmRJbmZvIjoie1wiT1BFTl9NVUxUSV9QQVlNRU5UX0FCSUxJVFlcIjpcInRydWVcIixcImRpc3BsYXlBbnRvbUxvZ29cIjpcImZhbHNlXCJ9IiwibmVlZEFjY291bnRDb25maXJtUGFnZSI6ZmFsc2UsInBheW1lbnRTZXNzaW9uQ29uZmlnIjp7InBheW1lbnRNZXRob2RDYXRlZ29yeVR5cGUiOiJBTEwiLCJwcm9kdWN0U2NlbmUiOiJDSEVDS09VVF9QQVlNRU5UIiwicHJvZHVjdFNjZW5lVmVyc2lvbiI6IjEuMCJ9LCJzZWN1cml0eUNvbmZpZyI6eyJhcHBJZCI6IiIsImFwcE5hbWUiOiJPbmVBY2NvdW50IiwiYml6VG9rZW4iOiI2VGNkYnIyckYzclBZeDRoa1ZySHFidmoiLCJnYXRld2F5IjoiaHR0cHM6Ly9pbWdzLXNlYS5hbGlwYXkuY29tL21ndy5odG0iLCJoNWdhdGV3YXkiOiJodHRwczovL29wZW4tc2VhLWdsb2JhbC5hbGlwYXkuY29tL2FwaS9vcGVuL3Jpc2tfY2xpZW50Iiwid29ya1NwYWNlSWQiOiIifSwic2tpcFJlbmRlclBheW1lbnRNZXRob2QiOmZhbHNlfQ%3D%3D&shadow=true", "paymentSessionData": "zlwfTQlUTNCYf6G9aFU/FiXpVL7IFj7KaX7cWp6YeTVH8iA2HariKNwQg8QDqEa7YjNI8UzIXDtsNMlGVp+v7A==&&SG&&188&&eyJlbGlnaWJsZUVhc3lQYXlNYXJrZXRpbmciOmZhbHNlLCJleHRlbmRJbmZvIjoie1wiT1BFTl9NVUxUSV9QQVlNRU5UX0FCSUxJVFlcIjpcInRydWVcIixcImRpc3BsYXlBbnRvbUxvZ29cIjpcImZhbHNlXCJ9IiwibmVlZEFjY291bnRDb25maXJtUGFnZSI6ZmFsc2UsInBheW1lbnRTZXNzaW9uQ29uZmlnIjp7InBheW1lbnRNZXRob2RDYXRlZ29yeVR5cGUiOiJBTEwiLCJwcm9kdWN0U2NlbmUiOiJDSEVDS09VVF9QQVlNRU5UIiwicHJvZHVjdFNjZW5lVmVyc2lvbiI6IjEuMCJ9LCJzZWN1cml0eUNvbmZpZyI6eyJhcHBJZCI6IiIsImFwcE5hbWUiOiJPbmVBY2NvdW50IiwiYml6VG9rZW4iOiI2VGNkYnIyckYzclBZeDRoa1ZySHFidmoiLCJnYXRld2F5IjoiaHR0cHM6Ly9pbWdzLXNlYS5hbGlwYXkuY29tL21ndy5odG0iLCJoNWdhdGV3YXkiOiJodHRwczovL29wZW4tc2VhLWdsb2JhbC5hbGlwYXkuY29tL2FwaS9vcGVuL3Jpc2tfY2xpZW50Iiwid29ya1NwYWNlSWQiOiIifSwic2tpcFJlbmRlclBheW1lbnRNZXRob2QiOmZhbHNlfQ==",
+          "paymentSessionExpiryTime": "2025-06-13T12:08:01+08:00",
+          "paymentSessionId": "zlwfTQlUTNCYf6G9aFU/FiXpVL7IFj7KaX7cWp6YeTWOER7GCR0onv8QoZyp3LyL",
+          "result": { "resultCode": "SUCCESS", "resultMessage": "success.", "resultStatus": "S" }
+        }
+        async function create (sessionData) {
+          await checkoutApp.mountComponent(
+            {
+              sessionData: sessionData.paymentSessionData,
+            },
+            '#ckp-embed-wrapper'
+          )
+        }
+        document.querySelector('button').addEventListener('click', () => {
+          create(sessionData)
+          // 移除按钮
+          document.querySelector('button').remove()
+          document.querySelector('.content').style.display = 'block'
+        })
+      }
+    }
+    document.head.appendChild(script)
+  </script>
+</body>
+
+</html>
